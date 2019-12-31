@@ -1,3 +1,3 @@
 # Objection
 News aggregator
-Build with Next.js
+Built with Next.js
