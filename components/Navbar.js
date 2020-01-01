@@ -6,6 +6,7 @@ export default function Navbar() {
             <nav>
                 <div className="logo">
                     <a>Objection</a>
+                    <a className="api">Powered by News API</a>
                 </div>
                 <div className="news">
                     <a>Popular</a>
@@ -24,7 +25,7 @@ export default function Navbar() {
                     left: 0;
                     box-sizing: border-box;
                     width: 100%;
-                    height: 55px;
+                    height: 60px;
                     display: flex;
                     font-family: Verdana, sans-serif;
                     font-size: 20px;
@@ -35,11 +36,18 @@ export default function Navbar() {
                 }
 
                 nav .news a {
-                    padding: 20px;
+                    padding-right: 40px;
                 }
 
-                nav .account {
+                nav .logo {
+                    font-style: oblique;
+                    font-size: 24px;
+                }
 
+                nav .logo .api {
+                    font-size: 10px;
+                    color: #cccccc;
+                    padding: 5px;
                 }
 
                 a:hover {
