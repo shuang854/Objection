@@ -1,6 +1,6 @@
 import { withRouter } from 'next/router';
 
-export default function Navbar() {
+export default function Navbar(props) {
     return (
         <>
             <nav>
@@ -9,10 +9,10 @@ export default function Navbar() {
                     <a className="api">Powered by News API</a>
                 </div>
                 <div className="news">
-                    <a>Popular</a>
-                    <a>World</a>
-                    <a>Tech</a>
-                    <a>Sports</a>
+                    <a onClick={() => (props.handleClick('popular'))}>Popular</a>
+                    <a onClick={() => (props.handleClick('business'))}>Business</a>
+                    <a onClick={() => (props.handleClick('technology'))}>Tech</a>
+                    <a onClick={() => (props.handleClick('sports'))}>Sports</a>
                 </div>
                 <div className="account">
                     <a>Account</a>
@@ -37,6 +37,7 @@ export default function Navbar() {
 
                 nav .news a {
                     padding-right: 40px;
+                    cursor: pointer;
                 }
 
                 nav .logo {

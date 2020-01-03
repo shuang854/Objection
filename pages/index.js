@@ -1,30 +1,51 @@
 import fetch from 'isomorphic-unfetch';
 import Navbar from '../components/Navbar';
 import Content from '../components/Content';
+import { useState } from 'react';
 
-const Index = props => (
-    <>
-        <div>
-            <Navbar />
-            <Content data={props}/>
-        </div>
-        <style jsx global>{`
+const Index = function(props) {
+    const [topic, setTopic] = useState(props.popular);
+
+    function handleNavClick(topic) {
+        if (topic === 'technology') setTopic(props.technology);
+        else if (topic === 'business') setTopic(props.business);
+        else if (topic === 'sports') setTopic(props.sports);
+        else if (topic === 'popular') setTopic(props.popular);
+    }
+
+    return (
+        <>
+            <div>
+                <Navbar handleClick={handleNavClick}/>
+                <Content data={topic} />
+            </div>
+            <style jsx global>{`
             html, body, div {
                 margin: 0;
                 padding: 0;
                 height: 100%;
             }
         `}</style>
-    </>
-);
+        </>
+    );
+};
 
-Index.getInitialProps = async function() {
-    const res = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=731ab7e66ae042c38dda50759c5a8053');
-    const data = await res.json();
-    console.log(data.articles);
+Index.getInitialProps = async function () {
+    const res1 = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=731ab7e66ae042c38dda50759c5a8053');
+    const res2 = await fetch('https://newsapi.org/v2/top-headlines?category=technology&country=us&apiKey=731ab7e66ae042c38dda50759c5a8053');
+    const res3 = await fetch('https://newsapi.org/v2/top-headlines?category=business&country=us&apiKey=731ab7e66ae042c38dda50759c5a8053');
+    const res4 = await fetch('https://newsapi.org/v2/top-headlines?category=sports&country=us&apiKey=731ab7e66ae042c38dda50759c5a8053');
+
+    const pop = await res1.json();
+    const tech = await res2.json();
+    const biz = await res3.json();
+    const sports = await res4.json();
 
     return {
-        articles: data.articles.map(entry => entry)
+        popular: pop.articles.map(entry => entry),
+        technology: tech.articles.map(entry => entry),
+        business: biz.articles.map(entry => entry),
+        sports: sports.articles.map(entry => entry)
     };
 };
 

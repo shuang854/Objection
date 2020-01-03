@@ -5,7 +5,7 @@ const Sidebar = function (props) {
     return (
         <>
             <ul>
-                {data.articles.map(article => (
+                {data.map(article => (
                     <li>
                         <a onClick={() => (props.handleClick(article.content, article.title))}>
                             {article.title.substring(0, article.title.indexOf(' - '))}

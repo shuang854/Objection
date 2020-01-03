@@ -2,8 +2,8 @@ import Sidebar from './Sidebar';
 import { useState } from 'react';
 
 export default function Content(props) {
-    const [title, setTitle] = useState(props.data.articles[0].title)
-    const [content, setContent] = useState(props.data.articles[0].content);
+    const [title, setTitle] = useState(props.data[0].title)
+    const [content, setContent] = useState(props.data[0].content);
     function handleClick(text, head) {
         setTitle(head);
         setContent(text);
