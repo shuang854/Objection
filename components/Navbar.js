@@ -1,4 +1,5 @@
-import { withRouter } from 'next/router';
+import { useState } from 'react';
+import Account from './Account';
 
 export default function Navbar(props) {
     return (
@@ -9,13 +10,14 @@ export default function Navbar(props) {
                     <a className="api">Powered by News API</a>
                 </div>
                 <div className="news">
-                    <a onClick={() => (props.handleClick('popular'))}>Popular</a>
-                    <a onClick={() => (props.handleClick('business'))}>Business</a>
-                    <a onClick={() => (props.handleClick('technology'))}>Tech</a>
-                    <a onClick={() => (props.handleClick('sports'))}>Sports</a>
+                    <a onClick={() => (props.navClick('popular'))}>Popular</a>
+                    <a onClick={() => (props.navClick('business'))}>Business</a>
+                    <a onClick={() => (props.navClick('technology'))}>Tech</a>
+                    <a onClick={() => (props.navClick('sports'))}>Sports</a>
                 </div>
-                <div className="account">
-                    <a>Account</a>
+                <div className="acc">
+                    <a onClick={props.menuClick}>Account</a>
+                    {props.closeMenu ? null : <Account />}
                 </div>
             </nav>
             <style jsx>{`
@@ -51,10 +53,13 @@ export default function Navbar(props) {
                     padding: 5px;
                 }
 
+                #dropdown {
+                }
+
                 a:hover {
                     color: #111;
                 }
             `}</style>
         </>
     );
-}
+};

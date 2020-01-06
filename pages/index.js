@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 const Index = function(props) {
     const [topic, setTopic] = useState(props.popular);
+    const [closeMenu, setMenu] = useState(true);
 
     function handleNavClick(topic) {
         if (topic === 'technology') setTopic(props.technology);
@@ -13,10 +14,18 @@ const Index = function(props) {
         else if (topic === 'popular') setTopic(props.popular);
     }
 
+    function handleClick() {
+        if (!closeMenu) setMenu(true);
+    }
+
+    function menuClick() {
+        setMenu(!closeMenu);
+    }
+
     return (
         <>
-            <div>
-                <Navbar handleClick={handleNavClick}/>
+            <div onClick={handleClick}>
+                <Navbar navClick={handleNavClick} menuClick={menuClick} closeMenu={closeMenu} />
                 <Content data={topic} />
             </div>
             <style jsx global>{`
