@@ -67,12 +67,13 @@ const Sidebar = function (props) {
                 }
 
                 li .voting {
-                    margin: auto;
                     display: flex;
                     flex-direction: column;
                     text-align: center;
                     align-items: center;
-                    padding-right: 10px;
+                    padding-right: 5px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
                 }
 
                 li {
@@ -81,6 +82,7 @@ const Sidebar = function (props) {
                     border-width: 1px;
                     border-color: #696969;
                     display: flex;
+                    align-items: center;
                 }
             `}</style>
         </>

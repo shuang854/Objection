@@ -17,14 +17,14 @@ export default function Navbar(props) {
                 </div>
                 <div className="acc">
                     <a onClick={props.menuClick}>Account</a>
-                    {props.closeMenu ? null : <Account />}
                 </div>
             </nav>
+            {props.closeMenu ? null : <Account />}
             <style jsx>{`
                 nav {
                     position: relative;
-                    z-index: 1;
                     left: 0;
+                    z-index: 2;
                     box-sizing: border-box;
                     width: 100%;
                     height: 60px;
@@ -34,11 +34,16 @@ export default function Navbar(props) {
                     padding: 14px 16px;
                     box-shadow: 0px 4px 4px 0px #ddd;
                     justify-content: space-between;
+                    line-height: 30px;
                     color: #696969
                 }
 
                 nav .news a {
                     padding-right: 40px;
+                    cursor: pointer;
+                }
+
+                nav .acc a {
                     cursor: pointer;
                 }
 
@@ -51,9 +56,6 @@ export default function Navbar(props) {
                     font-size: 10px;
                     color: #cccccc;
                     padding: 5px;
-                }
-
-                #dropdown {
                 }
 
                 a:hover {
