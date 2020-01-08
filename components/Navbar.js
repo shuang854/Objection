@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Account from './Account';
 
 export default function Navbar(props) {

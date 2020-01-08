@@ -1,10 +1,12 @@
+import Link from 'next/link';
+
 export default function Account(props) {
     return (
         <>
             <div id="dropdown">
                 <ul>
                     <li><a>Sign In</a></li>
-                    <li><a>Create Account</a></li>
+                    <li><Link href="/signup"><a>Create Account</a></Link></li>
                     <li><a>Settings</a></li>
                 </ul>
             </div>
