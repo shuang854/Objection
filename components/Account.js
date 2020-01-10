@@ -34,6 +34,11 @@ export default function Account(props) {
                     border-bottom-style: solid;
                     padding: 5px;
                 }
+
+                a {
+                    color: black;
+                    text-decoration: none;
+                }
             `}</style>
         </>
     );

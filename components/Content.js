@@ -20,6 +20,8 @@ export default function Content(props) {
             </div>
             <style jsx>{`
                 .content {
+                    font-family: Verdana, Geneva, sans-serif;
+                    font-size: 14px;
                     display: flex;
                     height: calc(100% - 60px);
                 }
