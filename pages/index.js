@@ -1,11 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 import Navbar from '../components/Navbar';
 import Content from '../components/Content';
+import firebase from 'firebase/app';
+import clientCredentials from '../credentials/client';
 import { useState } from 'react';
 
 const Index = function(props) {
     const [topic, setTopic] = useState(props.popular);
     const [closeMenu, setMenu] = useState(true);
+
+    if (!firebase.apps.length)
+        firebase.initializeApp(clientCredentials);
 
     function handleNavClick(topic) {
         if (topic === 'technology') setTopic(props.technology);
