@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Router from "next/router";
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import clientCredentials from '../credentials/client';
 import styles from '../styling/auth';
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    var _isMounted = false;
 
-    if (!firebase.apps.length)
-        firebase.initializeApp(clientCredentials);
+    useEffect(() => {
+        require('firebase/auth');
+        if (!firebase.apps.length)
+            firebase.initializeApp(clientCredentials);
+        _isMounted = true;
 
+        return function cleanup() {
+            _isMounted = false;
+        }
+    });
+    
     function handleLogin(event) {
         event.preventDefault();
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -24,6 +33,16 @@ export default function Login() {
         Router.push("/signup");
     }
 
+    function changeEmail(email) {
+        if (_isMounted)
+            setEmail(email);
+    }
+
+    function changePassword(pass) {
+        if (_isMounted)
+            setPassword(pass);
+    }
+
     return (
         <>
             <form className="login" href="/" >
@@ -32,11 +51,11 @@ export default function Login() {
                 </div>
                 <div>
                     <label>Email address</label>
-                    <input type="email" placeholder="Enter email" onChange={e => setEmail(e.target.value)} />
+                    <input type="email" placeholder="Enter email" onChange={e => changeEmail(e.target.value)} />
                 </div>
                 <div>
                     <label>Password</label>
-                    <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                    <input type="password" placeholder="Password" onChange={e => changePassword(e.target.value)}/>
                 </div>
                 <button onClick={handleLogin}>Login</button>
                 <button onClick={handleSignup}>Sign up instead</button>

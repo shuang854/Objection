@@ -18,7 +18,7 @@ export default function Navbar(props) {
                     <a onClick={props.menuClick}>Account</a>
                 </div>
             </nav>
-            {props.closeMenu ? null : <Account />}
+            {props.closeMenu ? null : <Account signedIn={props.signedIn} logOut={props.logOut} />}
             <style jsx>{`
                 nav {
                     position: relative;

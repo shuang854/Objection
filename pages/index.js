@@ -1,16 +1,31 @@
 import fetch from 'isomorphic-unfetch';
 import Navbar from '../components/Navbar';
 import Content from '../components/Content';
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import clientCredentials from '../credentials/client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Index = function(props) {
     const [topic, setTopic] = useState(props.popular);
     const [closeMenu, setMenu] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
 
-    if (!firebase.apps.length)
-        firebase.initializeApp(clientCredentials);
+    useEffect(() => {
+        require('firebase/auth');
+        if (!firebase.apps.length)
+            firebase.initializeApp(clientCredentials);
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // User is signed in.
+                var email = user.email;
+                setLoggedIn(true);
+                console.log(email);
+            } else {
+                // User is signed out.
+                // ...
+            }
+        });
+    });
 
     function handleNavClick(topic) {
         if (topic === 'technology') setTopic(props.technology);
@@ -27,10 +42,15 @@ const Index = function(props) {
         setMenu(!closeMenu);
     }
 
+    function logOut() {
+        firebase.auth().signOut();
+        setLoggedIn(false);
+    }
+
     return (
         <>
             <div onClick={handleClick}>
-                <Navbar navClick={handleNavClick} menuClick={menuClick} closeMenu={closeMenu} />
+                <Navbar navClick={handleNavClick} menuClick={menuClick} closeMenu={closeMenu} signedIn={loggedIn} logOut={logOut}/>
                 <Content data={topic} />
             </div>
             <style jsx global>{`

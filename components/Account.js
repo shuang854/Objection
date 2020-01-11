@@ -5,8 +5,9 @@ export default function Account(props) {
         <>
             <div id="dropdown">
                 <ul>
-                    <li><Link href="/login"><a>Sign In</a></Link></li>
-                    <li><Link href="/signup"><a>Create Account</a></Link></li>
+                    {!props.signedIn && <li><Link href="/login"><a>Sign In</a></Link></li>}
+                    {!props.signedIn && <li><Link href="/signup"><a>Create Account</a></Link></li>}
+                    {props.signedIn && <li><a onClick={props.logOut}>Logout</a></li>}
                     <li><a>Settings</a></li>
                 </ul>
             </div>
