@@ -15,7 +15,7 @@ export default function Navbar(props) {
                     <a onClick={() => (props.navClick('sports'))}>Sports</a>
                 </div>
                 <div className="acc">
-                    <a onClick={props.menuClick}>Account</a>
+                    <a onClick={props.menuClick}>{props.user}</a>
                 </div>
             </nav>
             {props.closeMenu ? null : <Account signedIn={props.signedIn} logOut={props.logOut} />}

@@ -7,6 +7,7 @@ import styles from '../styling/auth';
 export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
 
     require('firebase/auth');
     if (!firebase.apps.length)
@@ -16,6 +17,10 @@ export default function Signup() {
         event.preventDefault();
         firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
             console.log(error);
+        });
+        const db = firebase.firestore();
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+            user: username
         });
         Router.push("/");
     }
@@ -32,6 +37,10 @@ export default function Signup() {
                     <small className="text-muted">
                         We'll never share your email with anyone else.
                     </small>
+                </div>
+                <div>
+                    <label>Username</label>
+                    <input placeholder="Username" onChange={e => setUsername(e.target.value)}></input>
                 </div>
                 <div>
                     <label>Password</label>

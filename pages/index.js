@@ -3,28 +3,42 @@ import Navbar from '../components/Navbar';
 import Content from '../components/Content';
 import firebase from 'firebase';
 import clientCredentials from '../credentials/client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Index = function(props) {
     const [topic, setTopic] = useState(props.popular);
     const [closeMenu, setMenu] = useState(true);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState("Account");
 
-    useEffect(() => {
-        require('firebase/auth');
-        if (!firebase.apps.length)
-            firebase.initializeApp(clientCredentials);
-        firebase.auth().onAuthStateChanged(function(user) {
+    if (!firebase.apps.length)
+        firebase.initializeApp(clientCredentials);
+    const db = firebase.firestore();
+
+    var authFlag = true;
+    console.log(username);
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (authFlag) {
+            authFlag = false;
             if (user) {
                 // User is signed in.
-                var email = user.email;
-                setLoggedIn(true);
-                console.log(email);
+                if (!loggedIn) {
+                    var email = user.email;
+                    setLoggedIn(true);
+
+                    console.log(email);
+                    db.collection('users').doc(user.uid).get().then(function(snapshot) {
+                        setUsername(snapshot.data().username);
+                    });
+                }
             } else {
                 // User is signed out.
-                // ...
+                if (loggedIn) {
+                    setLoggedIn(false);
+                    setUsername("Account");
+                }
             }
-        });
+        }
     });
 
     function handleNavClick(topic) {
@@ -44,13 +58,12 @@ const Index = function(props) {
 
     function logOut() {
         firebase.auth().signOut();
-        setLoggedIn(false);
     }
 
     return (
         <>
             <div onClick={handleClick}>
-                <Navbar navClick={handleNavClick} menuClick={menuClick} closeMenu={closeMenu} signedIn={loggedIn} logOut={logOut}/>
+                <Navbar navClick={handleNavClick} menuClick={menuClick} closeMenu={closeMenu} signedIn={loggedIn} logOut={logOut} user={username}/>
                 <Content data={topic} />
             </div>
             <style jsx global>{`

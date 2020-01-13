@@ -24,8 +24,9 @@ export default function Login() {
         event.preventDefault();
         firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
             console.log(error);
+        }).then(() => {
+            Router.push("/");
         });
-        Router.push("/");
     }
 
     function handleSignup(event) {
