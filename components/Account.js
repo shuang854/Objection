@@ -7,7 +7,7 @@ export default function Account(props) {
                 <ul>
                     {!props.signedIn && <li><Link href="/login"><a>Sign In</a></Link></li>}
                     {!props.signedIn && <li><Link href="/signup"><a>Create Account</a></Link></li>}
-                    {props.signedIn && <li><a onClick={props.logOut}>Logout</a></li>}
+                    {props.signedIn && <li><Link href=""><a onClick={props.logOut}>Logout</a></Link></li>}
                     <li><a>Settings</a></li>
                 </ul>
             </div>

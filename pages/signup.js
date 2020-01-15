@@ -8,6 +8,7 @@ export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+    const [error, setError] = useState(" ");
 
     require('firebase/auth');
     if (!firebase.apps.length)
@@ -15,19 +16,25 @@ export default function Signup() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-            console.log(error);
-        });
         const db = firebase.firestore();
-        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-            user: username
+        firebase.auth().createUserWithEmailAndPassword(email, password).then((data) => {
+            console.log(data.user);
+            db.collection('users').doc(data.user.uid).set({
+                'username': username
+            });
+            Router.push("/");
+        }).catch(function(error) {
+            console.log(error);
+            setError(error.message);
         });
-        Router.push("/");
     }
 
     return (
         <>
             <form className="signup" onSubmit={handleSubmit} href="/" >
+                <div className="error">
+                    {error}
+                </div>
                 <div className="intro">
                     Create an account.
                 </div>

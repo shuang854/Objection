@@ -7,6 +7,7 @@ import styles from '../styling/auth';
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     var _isMounted = false;
 
     useEffect(() => {
@@ -22,10 +23,10 @@ export default function Login() {
     
     function handleLogin(event) {
         event.preventDefault();
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-            console.log(error);
-        }).then(() => {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
             Router.push("/");
+        }).catch(function(error) {
+            setError(error.message);
         });
     }
 
@@ -47,6 +48,9 @@ export default function Login() {
     return (
         <>
             <form className="login" href="/" >
+                <div className="error">
+                    {error}
+                </div>
                 <div className="intro">
                     Sign in.
                 </div>

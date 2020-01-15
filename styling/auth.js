@@ -68,4 +68,10 @@ export default css`
         font-weight: bold;
         border-bottom: 2px solid #777;
     }
+
+    form .error {
+        font-size: 16px;
+        color: red;
+        margin-bottom: .25rem;
+    }
 `

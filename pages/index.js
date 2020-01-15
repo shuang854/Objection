@@ -16,7 +16,6 @@ const Index = function(props) {
     const db = firebase.firestore();
 
     var authFlag = true;
-    console.log(username);
     firebase.auth().onAuthStateChanged(function(user) {
         if (authFlag) {
             authFlag = false;
